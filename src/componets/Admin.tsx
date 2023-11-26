@@ -1,19 +1,19 @@
-import { doc, updateDoc } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
-import { db, storage } from "../firebase";
+import { doc, updateDoc } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
+import { db, storage } from '../firebase';
 import {
   getDownloadURL,
   listAll,
   uploadBytes,
   ref as storageRef,
-} from "firebase/storage";
+} from 'firebase/storage';
 
 const Admin = () => {
-  const [text, setText] = useState("");
+  const [text, setText] = useState('');
   const [img, setImg] = useState<any>();
 
   const upload = async () => {
-    const washingtonRef = doc(db, "admin", "pGA34c2Zvm2URwPlaFvI");
+    const washingtonRef = doc(db, 'admin', 'pGA34c2Zvm2URwPlaFvI');
 
     // Set the "capital" field of the city 'DC'
     await updateDoc(washingtonRef, {
@@ -23,14 +23,14 @@ const Admin = () => {
     // Check if an image is selected
     if (img) {
       // Create a reference to the root of your Storage
-      const storageRootRef = storageRef(storage, "your-storage-root-folder");
+      const storageRootRef = storageRef(storage, 'your-storage-root-folder');
 
       // Create a reference to the selected image file
       const imageRef = storageRef(storageRootRef, img.name);
 
       // Upload the image to Firebase Storage
       await uploadBytes(imageRef, img).then(async (snapshot) => {
-        console.log("Uploaded a blob or file!");
+        console.log('Uploaded a blob or file!');
 
         // Get the download URL of the uploaded image
         const downloadURL = await getDownloadURL(snapshot.ref);
@@ -42,7 +42,7 @@ const Admin = () => {
       });
     }
 
-    alert("업로드 완료!");
+    alert('업로드 완료!');
 
     // // 'file' comes from the Blob or File API
     // await uploadBytes(storageRef, img).then((snapshot) => {
